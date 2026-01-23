@@ -34,9 +34,18 @@ class _HomeScrollView extends StatelessWidget {
       children: const [
         HomeAppBar(),
         StudentIDStack(),
+        // Padding(
+        //   padding: EdgeInsets.fromLTRB(16, 20, 16, 10),
+        //   child: TopSearchBar(),
+        // ),
+        const SizedBox(height: 16,),
+        Divider(
+          indent: 16,
+          endIndent: 16,
+        ),
         Padding(
-          padding: EdgeInsets.fromLTRB(16, 20, 16, 4),
-          child: TopSearchBar(),
+          padding: EdgeInsets.fromLTRB(16, 8, 16, 10),
+          child: UpdatesSection(attendancePercentage: 75),
         ),
       ],
     );
@@ -164,10 +173,24 @@ class _StudentAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const CircleAvatar(
-      radius: 80,
-      backgroundImage:
-          AssetImage("assets/images/profile_pic_4_50w.jpg"),
+    return CircleAvatar(
+      radius: 80, // outer radius (border)
+      backgroundColor: primaryColor,
+      child: CircleAvatar(
+        radius: 77,
+        backgroundColor: graphicWhite,
+        child: Padding(
+          padding: const EdgeInsets.all(2),
+          child: ClipOval(
+            child: Image.asset(
+              "assets/images/profile_pic_4_50w.jpg",
+              fit: BoxFit.cover,
+              width: 150,
+              height: 150,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -432,6 +455,161 @@ class TopSearchBar extends StatelessWidget {
             size: 28,
           ),
         ),
+      ),
+    );
+  }
+}
+
+
+
+
+
+class UpdatesSection extends StatelessWidget {
+  final int attendancePercentage;
+
+  const UpdatesSection({
+    super.key,
+    required this.attendancePercentage,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const _SecondaryTitle(),
+        kH6,
+        kH4,
+        _UpdatesCard(attendancePercentage: attendancePercentage),
+      ],
+    );
+  }
+}
+
+class _SecondaryTitle extends StatelessWidget {
+  const _SecondaryTitle();
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      "Updates",
+      style: kInfoHeadingStyle,
+    );
+  }
+}
+
+
+class _UpdatesCard extends StatelessWidget {
+  final int attendancePercentage;
+
+  const _UpdatesCard({
+    required this.attendancePercentage,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final bool isLowAttendance = attendancePercentage < 75;
+
+    return Container(
+      padding: const EdgeInsets.all(kSpace16),
+      decoration: BoxDecoration(
+        color: secondaryColor,
+        borderRadius: BorderRadius.circular(28),
+      ),
+      child: Column(
+        children: [
+          _AttendanceRow(
+            attendancePercentage: attendancePercentage,
+            isLowAttendance: isLowAttendance,
+          ),
+          kH16,
+          _AdmitCardRow(),
+        ],
+      ),
+    );
+  }
+}
+
+
+// dummy (needed to be connected to attendance page)
+class _AttendanceRow extends StatelessWidget {
+  final int attendancePercentage;
+  final bool isLowAttendance;
+
+  const _AttendanceRow({
+    required this.attendancePercentage,
+    required this.isLowAttendance,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(kSpace16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            "Current Attendance :",
+            style: kSubHeadingStyle,
+          ),
+          Text(
+            "$attendancePercentage %",
+            style: kSubHeadingStyle.copyWith(
+              fontWeight: FontWeight.w600,
+              fontSize: 24,
+              color: isLowAttendance ? Colors.red : Colors.green,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
+// dummy (needed to be connected to exam page)
+class _AdmitCardRow extends StatelessWidget {
+  const _AdmitCardRow();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(kSpace16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            "Admit Card\nReleased",
+            style: kSubHeadingStyle,
+          ),
+          ElevatedButton(
+            onPressed: () {}, // intentionally does nothing
+            style: ElevatedButton.styleFrom(
+              elevation: 2,
+              backgroundColor: primaryColor,
+              padding: const EdgeInsets.fromLTRB(24,14,24,14),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+            child: const Text(
+              "Download",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

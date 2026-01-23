@@ -568,12 +568,13 @@ class SecondarySection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: const [
           _SecondaryTitle(),
-          kH8,
+          kH6,
+          kH4,
           _SecondaryList(),
         ],
       ),
