@@ -4,7 +4,7 @@ import 'package:uniview/graphic_era_theme.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 
-// main class
+/* ========================================== HOME PAGE ========================================== */ 
 class GraphicEraHome extends StatelessWidget {
   const GraphicEraHome({super.key});
 
@@ -16,33 +16,51 @@ class GraphicEraHome extends StatelessWidget {
         onTap: () {
           FocusManager.instance.primaryFocus?.unfocus();
         },
+
+/*  ----------------------------------------- MAIN CLASS ----------------------------------------- */
         child: const _HomeScrollView(),
       ),
     );
   }
 }
 
+
+/* ========================================== MAIN CLASS ========================================== */ 
 class _HomeScrollView extends StatelessWidget {
   const _HomeScrollView();
 
   @override
   Widget build(BuildContext context) {
     return ListView(
+
+/*  --------------------------------------- PAGE PROPERTIES --------------------------------------- */
       physics: const BouncingScrollPhysics(),
       keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
       padding: EdgeInsets.zero,
+
       children: const [
+
+/*  ------------------------------------------- APP BAR ------------------------------------------- */
         HomeAppBar(),
+
+/*  ------------------------------------------- ID STACK ------------------------------------------ */
         StudentIDStack(),
+
+/*  ------------------------------------------ SEARCH BAR ----------------------------------------- */
+// DESERVES NO PURPOSE IN THIS APP
         // Padding(
         //   padding: EdgeInsets.fromLTRB(16, 20, 16, 10),
         //   child: TopSearchBar(),
         // ),
         const SizedBox(height: 16,),
+        
+/*  -------------------------------------------- DIVIDER ------------------------------------------ */
         Divider(
           indent: 16,
           endIndent: 16,
         ),
+
+/*  ------------------------------------------ UPDATES BAR ---------------------------------------- */
         Padding(
           padding: EdgeInsets.fromLTRB(16, 8, 16, 10),
           child: UpdatesSection(attendancePercentage: 75),
@@ -52,7 +70,7 @@ class _HomeScrollView extends StatelessWidget {
   }
 }
 
-// ---------------------------------------------------------- App Bar ----------------------------------------------------------
+/* ============================================ APP BAR =========================================== */ 
 class HomeAppBar extends StatelessWidget {
   const HomeAppBar({super.key});
 
@@ -60,10 +78,18 @@ class HomeAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(12, 0, 12, 10),
+
+/*  -------------------------------------------- CONTENT ------------------------------------------ */
       child: Row(
+// LOGO + TAGLINE + LINK BUTTON
         children: const [
+
+/*  --------------------------------------------- LOGO -------------------------------------------- */
           _AppBarImage(),
+          
           kW6,
+
+/*  ----------------------------------- TAGLINE + LINK BUTTON ------------------------------------- */
           Expanded(child: _AppBarContent()),
         ],
       ),
@@ -71,14 +97,20 @@ class HomeAppBar extends StatelessWidget {
   }
 }
 
+
+/*  ============================================ LOGO ============================================= */
 class _AppBarImage extends StatelessWidget {
   const _AppBarImage();
 
   @override
   Widget build(BuildContext context) {
+
+/*  ---------------------------------------- CIRCLE AVATAR ---------------------------------------- */
     return CircleAvatar(
       radius: 28,
       backgroundColor: graphicWhite,
+
+/*  ----------------------------------------- ASSET IMAGE ----------------------------------------- */
       child: Image.asset(
         "assets/images/graphic-era-university-dehradun-logo.png",
         fit: BoxFit.contain,
@@ -87,6 +119,7 @@ class _AppBarImage extends StatelessWidget {
   }
 }
 
+/*  ------------------------------------ TAGLINE + LINK BUTTON ------------------------------------ */
 class _AppBarContent extends StatelessWidget {
   const _AppBarContent();
 
@@ -94,9 +127,13 @@ class _AppBarContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+
+/*  ------------------------------------ TAGLINE + LINK BUTTON ------------------------------------ */
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            
+/*  ------------------------------------------ TAGLINE -------------------------------------------- */
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -113,11 +150,18 @@ class _AppBarContent extends StatelessWidget {
                 ),
               ],
             ),
+
+/*  ---------------------------------------- LINK BUTTON ------------------------------------------ */
+// Takes the students to the college website for detailed info
             DecoratedBox(
+
+/*  --------------------------------------- BOX PROPERTIES ---------------------------------------- */
               decoration: BoxDecoration(
                 color: graphicWhite,
                 borderRadius: BorderRadius.circular(32),
               ),
+
+/*  -------------------------------------- NAVIGATION LOGIC --------------------------------------- */
               child: IconButton(
                 onPressed: () {
                   launchUrl(
@@ -127,6 +171,8 @@ class _AppBarContent extends StatelessWidget {
                 },
                 padding: const EdgeInsets.all(12),
                 highlightColor: secondaryColor,
+              
+/*  ------------------------------------------ CONTENT -------------------------------------------- */
                 icon: const Icon(
                   FontAwesomeIcons.link,
                   color: primaryColor,
@@ -136,21 +182,85 @@ class _AppBarContent extends StatelessWidget {
             ),
           ],
         ),
+
+/*  ------------------------------------------ DIVIDER -------------------------------------------- */
         const Divider(height : 2,thickness: 2, color: primaryColor),
       ],
     );
   }
 }
 
-// ---------------------------------------------------------- ID Stack ----------------------------------------------------------
 
-// base Box
+/* ========================================== ID STACK ============================================ */ 
+class StudentIDStack extends StatelessWidget {
+  const StudentIDStack({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+/*  ------------------------------------------ CONTENT -------------------------------------------- */    
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(12, 0, 12, 0), 
+      child: const SizedBox(
+
+// STACK HEIGHT : 442
+        height: 442,
+        child: Stack(
+          children: [
+
+/*  ------------------------------------------ base box ------------------------------------------- */    
+            Positioned(
+              top: 62,
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: _BaseBox(),
+            ),
+
+/*  --------------------------------------- student avatar ---------------------------------------- */    
+            Positioned(
+              top: 4,
+              left: 14,
+              child: _StudentAvatar(),
+            ),
+
+/*  --------------------------------------- show ID button ---------------------------------------- */    
+            Positioned(
+              top: 0,
+              right: 0,
+              child: _ShowIDButtonWrapper(),
+            ),
+
+/*  ------------------------------------------ main info ------------------------------------------ */    
+            Positioned(
+              top: 72,
+              left: 186,
+              right: 16,
+              child: _MainInfo(),
+            ),
+
+/*  ---------------------------------------- academic info ---------------------------------------- */    
+            Positioned(
+              bottom: 16,
+              left: 16,
+              right: 16,
+              child: AcademicInfo(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+/*  ------------------------------------------ base box ------------------------------------------- */
 class _BaseBox extends StatelessWidget {
   const _BaseBox();
 
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
+/*  --------------------------------------- box properties ----------------------------------------- */
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(38),
         color: Colors.white,
@@ -162,29 +272,35 @@ class _BaseBox extends StatelessWidget {
           )
         ],
       ),
+
+/*  --------------------------------- content box height : 380 ------------------------------------- */
       child: const SizedBox(height: 380),
     );
   }
 }
 
-// student avatar
+/*  --------------------------------------- student avatar ------------------------------------------ */
 class _StudentAvatar extends StatelessWidget {
   const _StudentAvatar();
 
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
-      radius: 80, // outer radius (border)
+/*  --------------------------------------- picture border ------------------------------------------ */
+      radius: 80, 
       backgroundColor: primaryColor,
+/*  --------------------------------------- profile picture ----------------------------------------- */
       child: CircleAvatar(
         radius: 77,
         backgroundColor: graphicWhite,
         child: Padding(
           padding: const EdgeInsets.all(2),
           child: ClipOval(
+/*  ---------------------------------------- image asset -------------------------------------------- */
             child: Image.asset(
               "assets/images/profile_pic_4_50w.jpg",
               fit: BoxFit.cover,
+/*  -------------------------------------- picture dimension ---------------------------------------- */
               width: 150,
               height: 150,
             ),
@@ -195,13 +311,36 @@ class _StudentAvatar extends StatelessWidget {
   }
 }
 
-// show ID button
+/*  ---------------------------------------- show ID button ------------------------------------------ */
+class _ShowIDButtonWrapper extends StatelessWidget {
+  const _ShowIDButtonWrapper();
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+
+// show ID button logic
+      onPressed: () {
+// to placeholder()
+      },
+
+      style: ElevatedButton.styleFrom(
+        padding: EdgeInsets.zero,
+        elevation: 0,
+      ),
+      child: const _ShowIDButton(),
+    );
+  }
+}
+
+/*  ---------------------------------- show ID button decorations ------------------------------------ */
 class _ShowIDButton extends StatelessWidget {
   const _ShowIDButton();
 
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
+/*  -------------------------------------- box decorations ------------------------------------------- */
       decoration: BoxDecoration(
         color: secondaryColor,
         boxShadow: [
@@ -217,6 +356,7 @@ class _ShowIDButton extends StatelessWidget {
           bottomLeft: Radius.circular(28),
         ),
       ),
+/*  --------------------------------------- show ID button ------------------------------------------- */
       child: Padding(
         padding: const EdgeInsets.fromLTRB(18, 12, 18, 12),
         child: Row(
@@ -242,6 +382,8 @@ class _ShowIDButton extends StatelessWidget {
   }
 }
 
+
+/*  ------------------------------------------- main info -------------------------------------------- */
 // Main Info : Name + Course + Year + Semester
 class _MainInfo extends StatelessWidget {
   const _MainInfo();
@@ -252,17 +394,20 @@ class _MainInfo extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
+/*  ----------------------------------------- student name -------------------------------------------- */
           "Abhinav Bhatt",
           style: kHeadingStyle.copyWith(fontSize: 24),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
         Text(
+/*  ---------------------------------------- student course ------------------------------------------- */
           "BSc (H.) Computer Science",
           style: kSubHeadingStyle,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
         ),
+/*  --------------------------------------- student year & sem ---------------------------------------- */
         Row(
           children: [
             Text("Year : ", style: kHeadingStyle),
@@ -277,8 +422,9 @@ class _MainInfo extends StatelessWidget {
   }
 }
 
-// Tile Structure
+/*  ----------------------------------------- Tile Structure ------------------------------------------ */
 class InfoTile extends StatelessWidget {
+// needed
   final String label;
   final String value;
 
@@ -292,6 +438,8 @@ class InfoTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
+
+/*  ------------------------------------------- Tile Label -------------------------------------------- */
       child: Row(
         children: [
           Expanded(
@@ -301,7 +449,10 @@ class InfoTile extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
           ),
+          
           const SizedBox(width: 8),
+
+/*  ------------------------------------------- Tile value -------------------------------------------- */
           Text(
             value,
             style: kInfoStyle,
@@ -313,13 +464,15 @@ class InfoTile extends StatelessWidget {
   }
 }
 
-// Academic Info 
+/*  ----------------------------------------- Academic Info ------------------------------------------- */ 
 class AcademicInfo extends StatelessWidget {
   const AcademicInfo({super.key});
 
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
+
+/*  ----------------------------------------- box decoration ------------------------------------------ */ 
       decoration: BoxDecoration(
         color: secondaryColor,
         borderRadius: BorderRadius.circular(28),
@@ -328,17 +481,20 @@ class AcademicInfo extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(16, 14, 16, 10),
         child: Column(
           children: const [
+
+/*  ----------------------------------------- Official Email ------------------------------------------ */ 
             InfoTile(label: "Official Email", value: "12345678@geu.ac.in"),
             Divider(),
+/*  ----------------------------------------- Class Roll No ------------------------------------------- */ 
             InfoTile(label: "Class Roll No.", value: "00"),
             Divider(),
+/*  ------------------------------------------- Enroll No --------------------------------------------- */ 
             InfoTile(label: "Enroll No.", value: "GE-12345678"),
             Divider(),
-            InfoTile(
-              label: "University Roll No.",
-              value: "1234567890",
-            ),
+/*  --------------------------------------- University Roll No ---------------------------------------- */ 
+            InfoTile(label: "University Roll No.", value: "1234567890",),
             Divider(),
+/*  ----------------------------------------- Official Email ------------------------------------------ */ 
             InfoTile(label: "Status", value: "Active"),
           ],
         ),
@@ -347,124 +503,10 @@ class AcademicInfo extends StatelessWidget {
   }
 }
 
-// ID Stack
-class StudentIDStack extends StatelessWidget {
-  const StudentIDStack({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
-      child: const SizedBox(
-        height: 442,
-        child: Stack(
-          children: [
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: _BaseBox(),
-            ),
-            Positioned(
-              top: 4,
-              left: 14,
-              child: _StudentAvatar(),
-            ),
-            Positioned(
-              top: 0,
-              right: 0,
-              child: _ShowIDButtonWrapper(),
-            ),
-            Positioned(
-              top: 72,
-              left: 186,
-              right: 16,
-              child: _MainInfo(),
-            ),
-            Positioned(
-              bottom: 16,
-              left: 16,
-              right: 16,
-              child: AcademicInfo(),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _ShowIDButtonWrapper extends StatelessWidget {
-  const _ShowIDButtonWrapper();
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {},
-      style: ElevatedButton.styleFrom(
-        padding: EdgeInsets.zero,
-        elevation: 0,
-      ),
-      child: const _ShowIDButton(),
-    );
-  }
-}
-
-
-// ---------------------------------------------------------- Search Bar ----------------------------------------------------------
-
-final OutlineInputBorder _searchEnabledBorder = OutlineInputBorder(
-  borderRadius: BorderRadius.circular(32),
-  borderSide: const BorderSide(
-    color: Colors.black26,
-    width: 1.5,
-  ),
-);
-
-final OutlineInputBorder _searchFocusedBorder = OutlineInputBorder(
-  borderRadius: BorderRadius.circular(32),
-  borderSide: const BorderSide(
-    color: primaryColor,
-    width: 1.5,
-  ),
-);
-
-class TopSearchBar extends StatelessWidget {
-  const TopSearchBar({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      style: kInfoHeadingStyle,
-      cursorColor: primaryColor,
-      decoration: InputDecoration(
-        filled: true,
-        fillColor: graphicWhite,
-        contentPadding: EdgeInsets.fromLTRB(20, 16, 20, 16),
-    
-        label: Text('Search', style: kTagsStyle.copyWith(fontSize: 16)),
-        hintText: 'Quick Access',
-        hintStyle: kTagsStyle.copyWith(fontSize: 16),
-        enabledBorder: _searchEnabledBorder,
-        focusedBorder: _searchFocusedBorder,
-        prefixIcon: const Padding(
-          padding: EdgeInsets.fromLTRB(10, 10, 2, 10),
-          child: Icon(
-            Icons.search,
-            color: Colors.black54,
-            size: 28,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-
-
-
-
+/*  ----------------------------------------- Academic Info ------------------------------------------- */ 
 class UpdatesSection extends StatelessWidget {
+// needed
   final int attendancePercentage;
 
   const UpdatesSection({
@@ -477,15 +519,19 @@ class UpdatesSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+
+/*  --------------------------------------------- title ----------------------------------------------- */ 
         const _SecondaryTitle(),
         kH6,
         kH4,
+/*  ----------------------------------------- updating cards ------------------------------------------ */ 
         _UpdatesCard(attendancePercentage: attendancePercentage),
       ],
     );
   }
 }
 
+/*  ----------------------------------------- Academic Info ------------------------------------------- */ 
 class _SecondaryTitle extends StatelessWidget {
   const _SecondaryTitle();
 
@@ -499,6 +545,7 @@ class _SecondaryTitle extends StatelessWidget {
 }
 
 
+/*  ----------------------------------------- Academic Info ------------------------------------------- */ 
 class _UpdatesCard extends StatelessWidget {
   final int attendancePercentage;
 

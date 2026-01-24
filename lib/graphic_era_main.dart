@@ -5,6 +5,7 @@ import 'package:uniview/graphic_era_exam.dart';
 import 'package:uniview/graphic_era_home.dart';
 import 'package:uniview/graphic_era_theme.dart';
 
+// Main Screen : Stateful for page navigation
 class GraphicEraMain extends StatefulWidget {
   const GraphicEraMain({super.key});
 
@@ -12,11 +13,14 @@ class GraphicEraMain extends StatefulWidget {
   State<GraphicEraMain> createState() => _GraphicEraMain();
 }
 
+/* ========================================== Main class ========================================== */ 
 class _GraphicEraMain extends State<GraphicEraMain> {
+  
+// needed variables
   late final PageController _pageController;
   final ValueNotifier<int> _indexNotifier = ValueNotifier(0);
 
-  // cache styles once
+// cache styles once
   late final TextStyle _selectedLabelStyle;
   late final TextStyle _unselectedLabelStyle;
 
@@ -41,25 +45,34 @@ class _GraphicEraMain extends State<GraphicEraMain> {
     return Scaffold(
       backgroundColor: graphicWhite,
 
-      // ---------- BODY ----------
+/*  ============================================= BODY ============================================= */
       body: PageView(
         controller: _pageController,
         onPageChanged: (value) {
           _indexNotifier.value = value;
         },
+
+/*  --------------------------------------------- PAGES --------------------------------------------- */
         children: const [
+
+/*  ------------------------------------------- HOME PAGE ------------------------------------------- */
           GraphicEraHome(),
+/*  ---------------------------------------- ATTENDANCE PAGE ---------------------------------------- */
           GraphicEraAttendance(),
+/*  ------------------------------------------- EXAM PAGE ------------------------------------------- */
           GraphicEraExam(),
+
         ],
       ),
 
-      // ---------- BOTTOM NAV ----------
+/*  ========================================= NAVIGATION BAR ========================================= */
       bottomNavigationBar: SafeArea(
         top: false,
         child: ValueListenableBuilder<int>(
           valueListenable: _indexNotifier,
           builder: (_, index, __) {
+
+/*  --------------------------------------------- CONTENT --------------------------------------------- */
             return SizedBox(
               height: 68,
               child: BottomNavigationBar(
@@ -71,6 +84,8 @@ class _GraphicEraMain extends State<GraphicEraMain> {
                     curve: Curves.easeOut,
                   );
                 },
+
+/*  ---------------------------------------- BUTTON PROPERTIES ---------------------------------------- */
                 iconSize: 24,
                 selectedItemColor: primaryColor,
                 unselectedItemColor: graphicBlack.withValues(alpha: 0.50),
@@ -79,14 +94,17 @@ class _GraphicEraMain extends State<GraphicEraMain> {
                 showSelectedLabels: true,
                 showUnselectedLabels: true,
                 items: const [
+/*  ------------------------------------------- HOME BUTTON ------------------------------------------- */
                   BottomNavigationBarItem(
                     icon: Icon(FontAwesomeIcons.idCard),
                     label: "Profile",
                   ),
+/*  ---------------------------------------- ATTENDANCE BUTTON ---------------------------------------- */
                   BottomNavigationBarItem(
                     icon: Icon(FontAwesomeIcons.calendar),
                     label: "Attendance",
                   ),
+/*  ------------------------------------------- EXAM BUTTON ------------------------------------------- */
                   BottomNavigationBarItem(
                     icon: Icon(FontAwesomeIcons.rectangleList),
                     label: "Exam",
