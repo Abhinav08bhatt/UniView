@@ -544,7 +544,6 @@ class _SecondaryTitle extends StatelessWidget {
   }
 }
 
-
 /*  ----------------------------------------- Academic Info ------------------------------------------- */ 
 class _UpdatesCard extends StatelessWidget {
   final int attendancePercentage;
