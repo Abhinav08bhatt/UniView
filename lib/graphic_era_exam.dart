@@ -1,73 +1,126 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:uniview/graphic_era_theme.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher.dart'; 
 
+
+/* =================================== MAIN CLASS =================================== */
 class GraphicEraExam extends StatelessWidget {
   const GraphicEraExam({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
+// background color of the page
       backgroundColor: graphicWhite,
+
+/* ----------------------------------- MAIN BODY ----------------------------------- */
       body: const _ExamScrollView(),
     );
   }
 }
 
+/* 
+Exam Page : 
 
+This page is based on current conditions of the exam status.
+the exam status has been divided into 3 factors : 
+1. before exam
+2. during exam
+3. after exam
+(all 3 of the conditions are in a cycle : meaning always one of the condition is true)
+
+- Before exam : (20 days after result - the day of admit card release)
+here we want the user to know the approx dates of the exam time and give them
+academic calender as an option to view the approx dates
+
+- during exam : (day the admit card is released - the day of last exam)
+here we give the user direct message of the exam dates and also gives them 
+option to access their admit card for exam usage
+
+- after exam : (day the exam ends - 20 days after result release)
+here we have 2 conditions :
+  1. result waiting (day the exams end - the day the result is announced)
+  2. result announced (the day the result is announced - 20 days after result release)
+
+goal is to get the status message from the backend and show the appropriate page and give 
+access to the required info.
+ */
+
+
+/* ================================= CASES VARIABLES ================================ */
+enum ExamType {
+  midSem,
+  endSem,
+}
 enum ExamPhase {
   before,
   during,
   after,
 }
-
-enum ExamType {
-  midSem,
-  endSem,
-}
-
 enum ResultStatus {
   waiting,
   announced,
 }
 
-
+/* ----------------------------------- MAIN BODY ----------------------------------- */
 class _ExamScrollView extends StatelessWidget {
   const _ExamScrollView();
 
   @override
   Widget build(BuildContext context) {
     return ListView(
+
+// PAGE DECORATIONS
       physics: const BouncingScrollPhysics(),
       keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
       children: const [
+
+/* ==================================== APP BAR ==================================== */
         ExamAppBar(),
+
+/* =================================== MAIN CARD =================================== */
         ExamMainCard(
+// need to link this to the backend
           phase: ExamPhase.during,
           type: ExamType.midSem,
         ),
+
         kH16,
+
         Divider(
           indent: 20,
           endIndent: 20,
         ),
+
+/* =================================== ADDITIONS =================================== */
         SecondarySection(),
+      
       ],
     );
   }
 }
 
+
+// --------------------------------------------------------------------------------- //
+
+
+/* ==================================== APP BAR ==================================== */
 class ExamAppBar extends StatelessWidget {
   const ExamAppBar({super.key});
 
   @override
   Widget build(BuildContext context) {
+
+// content : page heading + link button 
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 8, 12, 0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+
+// page heading
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,7 +141,10 @@ class ExamAppBar extends StatelessWidget {
               ],
             ),
           ),
+
           kW4,
+
+// link button
           DecoratedBox(
             decoration: BoxDecoration(
               color: primaryColor,
@@ -113,6 +169,7 @@ class ExamAppBar extends StatelessWidget {
               ),
             ),
           ),
+
         ],
       ),
     );
@@ -120,7 +177,9 @@ class ExamAppBar extends StatelessWidget {
 }
 
 
+/* =================================== MAIN CARD =================================== */
 class ExamMainCard extends StatelessWidget {
+// needed
   final ExamPhase phase;
   final ExamType type;
   final ResultStatus? resultStatus;
@@ -135,8 +194,15 @@ class ExamMainCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
+
+// content
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+      
+// card decorations
       child: _ExamCardShell(
+
+/* ================================ MAIN CARD CONTENT =============================== */ 
+// needed to connect to the backend
         child: _ExamPhaseContent(
           phase: phase,
           type: type,
@@ -147,7 +213,7 @@ class ExamMainCard extends StatelessWidget {
   }
 }
 
-
+// card decorations
 class _ExamCardShell extends StatelessWidget {
   final Widget child;
 
@@ -172,8 +238,9 @@ class _ExamCardShell extends StatelessWidget {
   }
 }
 
-
+// page cases depending on the action given from the condition given from the backend
 class _ExamPhaseContent extends StatelessWidget {
+// needed
   final ExamPhase phase;
   final ExamType type;
   final ResultStatus? resultStatus;
@@ -186,13 +253,19 @@ class _ExamPhaseContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+// cases
     switch (phase) {
       case ExamPhase.before:
+
+// case  : before
         return BeforeExamClass(examType: type);
 
+// case  : during
       case ExamPhase.during:
         return DuringExamClass(examType: type);
 
+// case  : after
       case ExamPhase.after:
         assert(
           resultStatus != null,
@@ -561,6 +634,8 @@ class _ResultWaiting extends StatelessWidget {
   }
 }
 
+
+// --------------------------------------------------------------------------------- //
 
 class SecondarySection extends StatelessWidget {
   const SecondarySection({super.key});
