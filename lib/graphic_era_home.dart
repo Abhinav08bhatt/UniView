@@ -4,7 +4,7 @@ import 'package:uniview/graphic_era_theme.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 
-/* ========================================== HOME PAGE ========================================== */ 
+/* ========================================== HOME PAGE =========================================== */ 
 class GraphicEraHome extends StatelessWidget {
   const GraphicEraHome({super.key});
 
@@ -17,7 +17,7 @@ class GraphicEraHome extends StatelessWidget {
           FocusManager.instance.primaryFocus?.unfocus();
         },
 
-/*  ----------------------------------------- MAIN CLASS ----------------------------------------- */
+/*  ----------------------------------------- MAIN CLASS ------------------------------------------ */
         child: const _HomeScrollView(),
       ),
     );
@@ -153,6 +153,8 @@ class _AppBarContent extends StatelessWidget {
 
 /*  ---------------------------------------- LINK BUTTON ------------------------------------------ */
 // Takes the students to the college website for detailed info
+/* can be an setting or menu icon that opens a side section with options : 
+link to the official erp : about us and other in future stuff */
             DecoratedBox(
 
 /*  --------------------------------------- BOX PROPERTIES ---------------------------------------- */
@@ -504,7 +506,7 @@ class AcademicInfo extends StatelessWidget {
 }
 
 
-/*  ----------------------------------------- Academic Info ------------------------------------------- */ 
+/*  ----------------------------------------- Update section ------------------------------------------ */ 
 class UpdatesSection extends StatelessWidget {
 // needed
   final int attendancePercentage;
@@ -531,7 +533,10 @@ class UpdatesSection extends StatelessWidget {
   }
 }
 
-/*  ----------------------------------------- Academic Info ------------------------------------------- */ 
+/*  -------------------------------------- Update section title --------------------------------------- */ 
+// this section is totally dummy : current attendance : exam update
+
+// Info section title : UPDATES
 class _SecondaryTitle extends StatelessWidget {
   const _SecondaryTitle();
 
@@ -544,8 +549,9 @@ class _SecondaryTitle extends StatelessWidget {
   }
 }
 
-/*  ----------------------------------------- Academic Info ------------------------------------------- */ 
+/*  ------------------------------------- Update section Content -------------------------------------- */ 
 class _UpdatesCard extends StatelessWidget {
+// needed (dummy)
   final int attendancePercentage;
 
   const _UpdatesCard({
@@ -556,7 +562,9 @@ class _UpdatesCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool isLowAttendance = attendancePercentage < 75;
 
+/* --------------------------------------------- Content ---------------------------------------------- */ 
     return Container(
+// Content properties
       padding: const EdgeInsets.all(kSpace16),
       decoration: BoxDecoration(
         color: secondaryColor,
@@ -564,12 +572,18 @@ class _UpdatesCard extends StatelessWidget {
       ),
       child: Column(
         children: [
+
+/* --------------------------------------- Attendance Section ----------------------------------------- */ 
           _AttendanceRow(
             attendancePercentage: attendancePercentage,
             isLowAttendance: isLowAttendance,
           ),
+
           kH16,
+
+/* ------------------------------------------- Exam Section ------------------------------------------- */ 
           _AdmitCardRow(),
+
         ],
       ),
     );
@@ -577,8 +591,11 @@ class _UpdatesCard extends StatelessWidget {
 }
 
 
+
+/* --------------------------------------- Attendance Section ----------------------------------------- */ 
 // dummy (needed to be connected to attendance page)
 class _AttendanceRow extends StatelessWidget {
+// needed
   final int attendancePercentage;
   final bool isLowAttendance;
 
@@ -590,6 +607,8 @@ class _AttendanceRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+
+// Content Properties
       padding: const EdgeInsets.all(kSpace16),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -598,10 +617,14 @@ class _AttendanceRow extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+
+// info heading : Current Attendance  
           Text(
             "Current Attendance :",
             style: kSubHeadingStyle,
           ),
+
+// info content : attendance (dummy)
           Text(
             "$attendancePercentage %",
             style: kSubHeadingStyle.copyWith(
@@ -617,13 +640,27 @@ class _AttendanceRow extends StatelessWidget {
 }
 
 
+/* ------------------------------------------ Exam Section -------------------------------------------- */ 
 // dummy (needed to be connected to exam page)
+/* it needs to know the exam status and show what section ot be present */
+
+// cases : before exam : during exam : after exam 
+
+/* ------------------------------------------ Before Exam --------------------------------------------- */
+/* 
+says clearly that exam dates are not confirmed yet : gives navigation to show the academic calender
+ */
+
+
+/* ------------------------------------------ During Exam --------------------------------------------- */
 class _AdmitCardRow extends StatelessWidget {
   const _AdmitCardRow();
 
   @override
   Widget build(BuildContext context) {
     return Container(
+
+// decorations
       padding: const EdgeInsets.all(kSpace16),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -632,12 +669,20 @@ class _AdmitCardRow extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+
+// info heading : Exam Info
           Text(
             "Admit Card\nReleased",
             style: kSubHeadingStyle,
           ),
+
+// info content : directing button
           ElevatedButton(
-            onPressed: () {}, // intentionally does nothing
+
+// button logic
+            onPressed: () {}, 
+            
+// button properties
             style: ElevatedButton.styleFrom(
               elevation: 2,
               backgroundColor: primaryColor,
@@ -646,6 +691,8 @@ class _AdmitCardRow extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
+
+// button content
             child: const Text(
               "Download",
               style: TextStyle(
@@ -660,3 +707,19 @@ class _AdmitCardRow extends StatelessWidget {
     );
   }
 }
+
+
+/* ------------------------------------------- After Exam --------------------------------------------- */
+
+// cases  : result waiting : results out
+
+/* ------------------------------------------ Result Waiting ------------------------------------------ */
+/* 
+says that results are not out yet (nothing else)
+ */
+
+
+/* ------------------------------------------- Result Out --------------------------------------------- */
+/* 
+says results are out : gives a navigation button to view the result
+ */
