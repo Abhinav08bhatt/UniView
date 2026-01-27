@@ -89,7 +89,7 @@ class HomeAppBar extends StatelessWidget {
           
           kW6,
 
-/*  ----------------------------------- TAGLINE + LINK BUTTON ------------------------------------- */
+/*  ------------------------------------ TAGLINE + LINK BUTTON ------------------------------------ */
           Expanded(child: _AppBarContent()),
         ],
       ),
@@ -166,28 +166,202 @@ link to the official erp : about us and other in future stuff */
 /*  -------------------------------------- NAVIGATION LOGIC --------------------------------------- */
               child: IconButton(
                 onPressed: () {
-                  launchUrl(
-                    Uri.parse('https://student.geu.ac.in'),
-                    mode: LaunchMode.externalApplication,
+                  showGeneralDialog(
+                    context: context,
+                    barrierDismissible: true,
+                    barrierLabel: "Menu",
+                    barrierColor: Colors.black38,
+                    transitionDuration: const Duration(milliseconds: 300),
+                    pageBuilder: (_, __, ___) {
+                      return const _RightSideMenu();
+                    },
+                    transitionBuilder: (_, animation, __, child) {
+                      return SlideTransition(
+                        position: Tween<Offset>(
+                          begin: const Offset(1, 0),
+                          end: Offset.zero,
+                        ).animate(animation),
+                        child: child,
+                      );
+                    },
                   );
                 },
                 padding: const EdgeInsets.all(12),
                 highlightColor: secondaryColor,
-              
 /*  ------------------------------------------ CONTENT -------------------------------------------- */
                 icon: const Icon(
-                  FontAwesomeIcons.link,
+                  Icons.menu,
                   color: primaryColor,
                   size: 24,
                 ),
               ),
             ),
+
           ],
         ),
 
 /*  ------------------------------------------ DIVIDER -------------------------------------------- */
         const Divider(height : 2,thickness: 2, color: primaryColor),
       ],
+    );
+  }
+}
+
+class _RightSideMenu extends StatelessWidget {
+  const _RightSideMenu();
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.centerRight,
+      child: Material(
+        color: Colors.transparent,
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            color: graphicWhite,
+            borderRadius: const BorderRadius.horizontal(
+              left: Radius.circular(32),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: primaryColor.withValues(alpha: 0.50),
+                spreadRadius: 4,
+                blurRadius: 24
+              )
+            ]
+          ),
+          child: SizedBox(
+            width: 260,
+            height: double.infinity,
+            child: ListView(
+              children: [
+
+                SizedBox(
+                  child: Column(
+                    children: [
+                      
+                      CircleAvatar(
+                        backgroundColor: Colors.transparent,
+                        backgroundImage: AssetImage("assets/images/graphic-era-university-dehradun-logo.png"),
+                        radius: 78,
+                      ),
+                
+                      kH8,
+                
+                      RichText(
+                        text: TextSpan(
+                          style: kGraphicLogo, // base style
+                          children: [
+                            TextSpan(
+                              text: 'Graphic',
+                              style: kGraphicLogo.copyWith(color: Colors.red),
+                            ),
+                            const TextSpan(
+                              text: ' Era',
+                            ),
+                          ],
+                        ),
+                      ),
+                
+                      Text(
+                        "Deemed to be University",
+                        style: kTagsStyle.copyWith(fontSize: 15.6,height: 1),
+                      ),
+                
+                    ],
+                  ),
+                ),
+
+                kH16,
+
+                const Divider(
+                    indent: 16,
+                    endIndent: 16,
+                    thickness: 2, 
+                    color: primaryColor
+                  ),
+
+                ListTile(
+                  contentPadding: EdgeInsets.fromLTRB(24, 0, 16, 0),
+                  leading: Icon(
+                    FontAwesomeIcons.link,
+                    color: primaryColor,
+                    size: 20,
+                  ),
+                  title: Text(
+                    'Student Portal',
+                    style: kInfoStyle.copyWith(
+                      color: primaryColor,
+                      letterSpacing: 0
+                    ),
+                  ),
+                  onTap: () async {
+                    Navigator.pop(context);
+                    await launchUrl(
+                      Uri.parse('https://student.geu.ac.in'),
+                      mode: LaunchMode.externalApplication,
+                    );
+                  },
+                ),
+
+                ListTile(
+                  contentPadding: EdgeInsets.fromLTRB(24, 0, 16, 0),
+                  leading: Icon(
+                    Icons.settings_outlined,
+                    color: primaryColor,
+                    size: 24,
+                  ),
+                  title: Text(
+                    'Settings',
+                    style: kInfoStyle.copyWith(
+                      color: primaryColor,
+                      letterSpacing: 0
+                    ),
+                  ),
+                  onTap: () async {
+                    Navigator.pop(context); // close the side menu
+
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Placeholder(),
+                      ),
+                    );
+                  },
+                ),
+                
+                ListTile(
+                  contentPadding: EdgeInsets.fromLTRB(24, 0, 16, 0),
+                  leading: Icon(
+                    Icons.info_outline_rounded,
+                    color: primaryColor,
+                    size: 24,
+                  ),
+                  title: Text(
+                    'About us',
+                    style: kInfoStyle.copyWith(
+                      color: primaryColor,
+                      letterSpacing: 0                      
+                    ),
+                  ),
+                  onTap: () async {
+                    Navigator.pop(context); // close the side menu
+
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Placeholder(),
+                      ),
+                    );
+                  },
+                ),
+
+              ],
+            ),
+
+          ),
+        ),
+      ),
     );
   }
 }
