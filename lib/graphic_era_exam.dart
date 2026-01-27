@@ -280,6 +280,11 @@ class _ExamPhaseContent extends StatelessWidget {
 }
 
 
+/* =================================== CONDITIONS =================================== */
+
+
+/* ----------------------------------- BEFORE EXAM ---------------------------------- */
+
 class BeforeExamClass extends StatelessWidget {
   final ExamType examType;
 
@@ -400,6 +405,8 @@ class _BeforeExamFooter extends StatelessWidget {
 }
 
 
+/* ----------------------------------- DURING EXAM ---------------------------------- */
+
 class DuringExamClass extends StatelessWidget {
   final ExamType examType;
 
@@ -443,7 +450,6 @@ class DuringExamClass extends StatelessWidget {
   }
 }
 
-
 class _DuringExamPeriod extends StatelessWidget {
   const _DuringExamPeriod();
 
@@ -458,7 +464,6 @@ class _DuringExamPeriod extends StatelessWidget {
     );
   }
 }
-
 
 class _DuringExamAction extends StatelessWidget {
   const _DuringExamAction();
@@ -489,15 +494,8 @@ class _DuringExamAction extends StatelessWidget {
   }
 }
 
-class _ExamLastUpdated extends StatelessWidget {
-  const _ExamLastUpdated();
 
-  @override
-  Widget build(BuildContext context) {
-    return const Text("Last updates : 23 Jan 2026");
-  }
-}
-
+/* ----------------------------------- AFTER EXAM ---------------------------------- */
 
 class AfterExamClass extends StatelessWidget {
   final ExamType examType;
@@ -545,7 +543,6 @@ class AfterExamClass extends StatelessWidget {
   }
 }
 
-
 class _ResultAnnounced extends StatelessWidget {
   const _ResultAnnounced();
 
@@ -584,7 +581,6 @@ class _ResultAnnounced extends StatelessWidget {
     );
   }
 }
-
 
 class _ResultWaiting extends StatelessWidget {
   const _ResultWaiting();
@@ -635,8 +631,21 @@ class _ResultWaiting extends StatelessWidget {
 }
 
 
+/* =================================== LAST UPDATE ================================== */
+// needs to be connected to the backend
+class _ExamLastUpdated extends StatelessWidget {
+  const _ExamLastUpdated();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Text("Last updates : 23 Jan 2026");
+  }
+}
+
 // --------------------------------------------------------------------------------- //
 
+
+/* ================================== SECONDARY SECTION ============================= */
 class SecondarySection extends StatelessWidget {
   const SecondarySection({super.key});
 
