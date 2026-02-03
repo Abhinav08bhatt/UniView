@@ -220,7 +220,7 @@ class _RightSideMenu extends StatelessWidget {
           decoration: BoxDecoration(
             color: graphicWhite,
             borderRadius: const BorderRadius.horizontal(
-              left: Radius.circular(32),
+              left: Radius.circular(20),
             ),
             boxShadow: [
               BoxShadow(
@@ -231,7 +231,8 @@ class _RightSideMenu extends StatelessWidget {
             ]
           ),
           child: SizedBox(
-            width: 260,
+            // width: 260,
+            width: (MediaQuery.of(context).size.width/2) + 22 ,
             height: double.infinity,
             child: ListView(
               children: [
@@ -243,7 +244,7 @@ class _RightSideMenu extends StatelessWidget {
                       CircleAvatar(
                         backgroundColor: Colors.transparent,
                         backgroundImage: AssetImage("assets/images/graphic-era-university-dehradun-logo.png"),
-                        radius: 78,
+                        radius: 72,
                       ),
                 
                       kH8,
@@ -319,8 +320,7 @@ class _RightSideMenu extends StatelessWidget {
                     ),
                   ),
                   onTap: () async {
-                    Navigator.pop(context); // close the side menu
-
+                    Navigator.pop(context); 
                     await Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -345,8 +345,7 @@ class _RightSideMenu extends StatelessWidget {
                     ),
                   ),
                   onTap: () async {
-                    Navigator.pop(context); // close the side menu
-
+                    Navigator.pop(context); 
                     await Navigator.push(
                       context,
                       MaterialPageRoute(
