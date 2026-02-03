@@ -250,7 +250,7 @@ class DateLabelsRow extends StatelessWidget {
           ),
         ),
         Text(
-          '23 Jan\n2026',
+          '3 Feb\n2026',
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 14,

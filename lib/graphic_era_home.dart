@@ -63,7 +63,7 @@ class _HomeScrollView extends StatelessWidget {
 /*  ------------------------------------------ UPDATES BAR ---------------------------------------- */
         Padding(
           padding: EdgeInsets.fromLTRB(16, 8, 16, 10),
-          child: UpdatesSection(attendancePercentage: 75),
+          child: UpdatesSection(attendancePercentage: 67.46),
         ),
       ],
     );
@@ -682,7 +682,7 @@ class AcademicInfo extends StatelessWidget {
 /*  ----------------------------------------- Update section ------------------------------------------ */ 
 class UpdatesSection extends StatelessWidget {
 // needed
-  final int attendancePercentage;
+  final double attendancePercentage;
 
   const UpdatesSection({
     super.key,
@@ -700,7 +700,7 @@ class UpdatesSection extends StatelessWidget {
         kH6,
         kH4,
 /*  ----------------------------------------- updating cards ------------------------------------------ */ 
-        _UpdatesCard(attendancePercentage: attendancePercentage),
+        _UpdatesCard(attendancePercentage: 67.46),
       ],
     );
   }
@@ -725,7 +725,7 @@ class _SecondaryTitle extends StatelessWidget {
 /*  ------------------------------------- Update section Content -------------------------------------- */ 
 class _UpdatesCard extends StatelessWidget {
 // needed (dummy)
-  final int attendancePercentage;
+  final double attendancePercentage;
 
   const _UpdatesCard({
     required this.attendancePercentage,
@@ -748,7 +748,7 @@ class _UpdatesCard extends StatelessWidget {
 
 /* --------------------------------------- Attendance Section ----------------------------------------- */ 
           _AttendanceRow(
-            attendancePercentage: attendancePercentage,
+            attendancePercentage: 67.46,
             isLowAttendance: isLowAttendance,
           ),
 
@@ -769,7 +769,7 @@ class _UpdatesCard extends StatelessWidget {
 // dummy (needed to be connected to attendance page)
 class _AttendanceRow extends StatelessWidget {
 // needed
-  final int attendancePercentage;
+  final double attendancePercentage;
   final bool isLowAttendance;
 
   const _AttendanceRow({
